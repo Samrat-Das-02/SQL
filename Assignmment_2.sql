@@ -31,6 +31,9 @@ insert into emp_Samrat values('E7', 'Jack', 'DP4', 'D3','F','High Road','Mumbai'
 insert into emp_Samrat values('E8', 'Jill', 'DP5', 'D3','F','High Road','Mumbai','Maharashtra','8301','56000','1-FEB-2000');
 update emp_Samrat set dept_code = 'DP2' where emp_name = 'Rita';
 update emp_Samrat set dept_code = 'DP2' where emp_name = 'Deb';
+update emp_Samrat set basic=70000 where emp_name ='Shyam';
+update emp_Samrat set basic=80000 where emp_name ='Rita';
+update emp_Samrat set basic=35000 where emp_name ='Deb';
 
 insert into designation_Samrat values('D1', 'Manager');
 insert into designation_Samrat values('D2', 'Executive');
@@ -56,3 +59,9 @@ select dept_code, avg(basic) as Average_Basic from  emp_Samrat group by dept_cod
 select dept_code ,count(*) as female_employees from emp_samrat where emp_samrat.sex='F' group by dept_code;
 ---3
 select city,dept_code,count(*) from emp_Samrat group by city,dept_code;
+---4
+select desig_code,dept_code from emp_samrat where jn_dt >= '01-JAN-00' group by desig_code,dept_code;
+---5
+select dept_code,sum(basic) as total_salary from emp_Samrat where basic >50000 group by dept_code order by total_salary asc;
+---6
+select emp_name,desig_desc,basic from emp_samrat,designation_samrat where emp_samrat.desig_code=designation_samrat.desig_code;
