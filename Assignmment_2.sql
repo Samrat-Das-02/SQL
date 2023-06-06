@@ -65,3 +65,25 @@ select desig_code,dept_code from emp_samrat where jn_dt >= '01-JAN-00' group by 
 select dept_code,sum(basic) as total_salary from emp_Samrat where basic >50000 group by dept_code order by total_salary asc;
 ---6
 select emp_name,desig_desc,basic from emp_samrat,designation_samrat where emp_samrat.desig_code=designation_samrat.desig_code;
+
+
+
+SELECT 
+  CASE
+    WHEN @prev_dcode != DCODE THEN CONCAT('\n', DCODE)
+    ELSE ''
+  END AS DCODE,
+  GROUP_CONCAT(
+    CONCAT(ECODE, ' ', ENAME, ' ', GRADE, ' ', FORMAT(BASIC, '#,##0.00'), ' ', JN_DT)
+    SEPARATOR '\n'
+  ) AS Records,
+  @prev_dcode := DCODE AS prev_dcode
+FROM
+  (SELECT 
+    @prev_dcode := '' AS prev_dcode,
+    EMP.*
+  FROM
+    EMP
+  ORDER BY DCODE) AS sorted
+GROUP BY DCODE
+
